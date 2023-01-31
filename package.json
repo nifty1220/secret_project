@@ -5,10 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall": "npm run build",
+    "start": "node server.js"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "express": "^4.18.2",
+    "serve-static": "^1.15.0",
     "vue": "^3.2.13",
     "vue3-toastify": "0.0.5"
   },
