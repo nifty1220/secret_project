@@ -1,5 +1,5 @@
 {
-  "name": "invoice_manager",
+  "name": "Invoice-Manager",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue3-toastify": "0.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
