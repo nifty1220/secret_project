@@ -36,7 +36,6 @@
 
             <div id="generate_area">
                 <div class="main_header" id="generate_header"> Generate Invoices </div>
-
                 <div id="date_area">
                     <div class="main_header" id="date_header"> Date Selection </div>
                     <br><br><br>
@@ -107,47 +106,58 @@ export default {
       goBack() {
           this.$emit("backToPageSelection", true)
       },
-      async refreshAliasSales() {
+      refreshAliasSales() {
 
           this.refresh_active = true
+
           axios({
-                  method: "GET",
+                  method: "POST",
                   url: 'http://10.0.0.9:5000/refresh_alias_sales',
-                  data: {},
-                  headers: {
-                      "user_id": this.user_id,
+                  data: {
                       "alias_email": this.alias_email,
-                      "alias_password": this.alias_password
+                      "alias_password": this.alias_password,
+                  },
+                  headers: {
+                      "Content-Type": "application/json",
+                      "user_id": this.user_id,
+
                   },
               })
               .then((response) => {
-                  console.log(response.data)
+                  let result_msg = ""
+
+                  if (response.data.data == 200) {
+                      result_msg = "Successfully updated Alias sales!"
+                  } else if (response.data.data == 401) {
+                      result_msg = "Error logging into alias account! Please check your credentials"
+                  } else {
+                      result_msg = "Unknown error"
+                  }
+
+                  toast(result_msg, {
+                      autoClose: 2000,
+                      progressClassName: 'Toastify__progress-bar-theme--dark',
+                      toastStyle: {
+                          fontSize: '15px',
+                          color:"black",
+                          "font-family": "Square",
+                          src: "url('./../../fonts/Square.TTF')",
+                          'letter-spacing': '2px',
+                          'text-decoration': 'none',
+                          'text-transform': 'uppercase',
+                          border: '3px solid',
+                          padding: '0.25em 0.5em',
+                          'box-shadow': '0px 0px 0px 0px, 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px',
+                          position: 'relative',
+                          'user-select': 'none',
+                          '-webkit-user-select': 'none',
+                          'touch-action': 'manipulation',
+                          "toastify-color-progress-dark": "#bb86fc",
+                      },
+                  });
+                  this.refresh_active = false
+
               });
-
-
-          this.refresh_active = false
-
-          toast("Successfully updated Alias sales!", {
-              autoClose: 2000,
-              progressClassName: 'Toastify__progress-bar-theme--dar',
-              toastStyle: {
-                  fontSize: '15px',
-                  color:"black",
-                  "font-family": "Square",
-                  src: "url('./../../fonts/Square.TTF')",
-                  'letter-spacing': '2px',
-                  'text-decoration': 'none',
-                  'text-transform': 'uppercase',
-                  border: '3px solid',
-                  padding: '0.25em 0.5em',
-                  'box-shadow': '0px 0px 0px 0px, 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px',
-                  position: 'relative',
-                  'user-select': 'none',
-                  '-webkit-user-select': 'none',
-                  'touch-action': 'manipulation',
-                  "toastify-color-progress-dark": "#bb86fc",
-              },
-          });
       },
   }
 }

@@ -17,7 +17,7 @@
 
         <div id="sort_options_header" class="main_header"> Sort Invoices by sale date </div>
         <br>
-        <button id="sort_checkbox" @click="setSortOption"></button><br>
+        <button id="sort_checkbox" @click="setSortOption">{{checkbox_text}}</button><br>
 
         <button id="save_settings_btn" @click="saveSettings()">Save Settings</button>
     </div>
@@ -32,12 +32,13 @@ export default {
   name: 'SettingsPage',
   props: {
       user_id: String,
-      user_settings: Array,
+      user_settings: Array
   },
   created() {
       this.sevdesk_key = this.user_settings["sevdesk_api_key"]
       this.alias_email = this.user_settings["alias_email"]
       this.alias_password = this.user_settings["alias_password"]
+      this.sort_by_sale_date = this.user_settings["sort_invoice_by_sale_date"]
       console.log("Settings Module received this data:")
       console.log(this.user_settings)
   },
@@ -45,8 +46,18 @@ export default {
       return {
           sevdesk_key: "",
           sort_by_sale_date: false,
+          checkbox_text: "",
           alias_email: "",
           alias_password: ""
+      }
+  },
+  watch: {
+      sort_by_sale_date() {
+          if (this.sort_by_sale_date == true) {
+              this.checkbox_text="✓"
+          } else {
+              this.checkbox_text=""
+          }
       }
   },
   methods: {
@@ -54,27 +65,29 @@ export default {
           this.$emit("backToPageSelection", true)
       },
       saveSettings() {
-          console.log(this.sevdesk_key)
+          console.log(this.sort_by_sale_date)
           axios({
                   method: "POST",
                   url: 'http://10.0.0.9:5000/save_user_settings',
-                  data: {},
-                  headers: {
-                      "user_id": this.user_id,
+                  data: {
                       "sevdesk_api_key": this.sevdesk_key,
                       "alias_email": this.alias_email,
                       "alias_password": this.alias_password,
                       "sort_option": this.sort_by_sale_date,
+                  },
+                  headers: {
+                      "Content-Type": "application/json",
+                      "user_id": this.user_id
                   },
               })
               .then((response) => {
                   let reponse_data = response.data
                   console.log(reponse_data)
                   this.$emit("retrieveUserData", this.user_id)
-                  //toast("Error trying to save!", {autoClose: 1000,});
+
                   toast("Settings saved successfully!", {
                       autoClose: 2000,
-                      progressClassName: 'Toastify__progress-bar-theme--dar',
+                      progressClassName: 'Toastify__progress-bar-theme--dark',
                       toastStyle: {
                           fontSize: '15px',
                           color:"black",
@@ -250,17 +263,14 @@ h1 {
 #sort_checkbox {
     height: 25px;
     width: 25px;
-    color:white;
     font-family: Square;
     src: url('./../../fonts/Square.TTF');
-    font-size: 125%;
-    letter-spacing: 2px;
     text-decoration: none;
     text-transform: uppercase;
     color: #000;
+    font-weight: bold;
     cursor: pointer;
     border: 3px solid;
-    padding: 0.25em 0.5em;
     box-shadow: 0px 0px 0px 0px, 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px;
     user-select: none;
     -webkit-user-select: none;

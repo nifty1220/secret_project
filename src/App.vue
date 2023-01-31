@@ -1,8 +1,8 @@
 <template>
   <LoginPage v-if="showLoginPage" @continueSiteSelectionPage="openSiteSelection" @retrieveUserData="loadUserData"/>
   <SiteSelectionPage v-if="showSiteSelectionPage" @showSelectedPage="openSelectedPage"/>
-  <AliasPage v-if="showAliasPage" @backToPageSelection="openSiteSelection" :user_id="current_user_id" :user_alias_sales="fetched_user_alias_sales" :user_settings="fetched_user_settings"/>
-  <StockxPage v-if="showStockxPage" @backToPageSelection="openSiteSelection" :user_id="current_user_id" :user_stockx_sales="fetched_user_stockx_sales" :user_settings="fetched_user_settings"/>
+  <AliasPage v-if="showAliasPage" @backToPageSelection="openSiteSelection" :user_id="current_user_id" :user_settings="fetched_user_settings"/>
+  <StockxPage v-if="showStockxPage" @backToPageSelection="openSiteSelection" :user_id="current_user_id" :user_settings="fetched_user_settings"/>
   <SettingsPage v-if="showSettingsPage" @backToPageSelection="openSiteSelection" @retrieveUserData="loadUserData" :user_id="current_user_id" :user_settings="fetched_user_settings"/>
 </template>
 

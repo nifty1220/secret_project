@@ -12,8 +12,8 @@
     </div>
     <div id="settings_container" @click="openSettings()">
         <img id="settings_image" src="./../assets/settings_icon.png">
-        <br>
-        <p id="icon_label" style="display:inline"> Settings </p>
+        <br><br>
+        <p id="settings_label" style="display:inline"> Settings </p>
     </div>
 </template>
 
@@ -66,7 +66,9 @@ export default {
 #stockx_image {
     width: 100%;
     border-radius: 30px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(255, 255, 255, 0.4) 0px 0px 50px;
+    border: 5px solid;
+    border-color: black
 }
 
 #alias_container {
@@ -83,13 +85,16 @@ export default {
 #alias_image {
     width: 100%;
     border-radius: 30px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 10px 25px;
+    box-shadow: rgba(0, 0, 0, 1) 0px 0px 50px;
+    border: 4px solid;
+    border-color: white
 }
 
 #settings_container {
     margin-top: 30%;
     margin-left: 46.25%;
     width: 7.5%;
+    //background-color: red;
 }
 
 #settings_container:hover {
@@ -97,9 +102,21 @@ export default {
 }
 
 #settings_image {
+    border-radius: 30px;
+    box-shadow: rgba(51, 51, 51, 1) 0px 0px 40px;
+    border: 4px solid;
+    border-color: rgba(51, 51, 51);
 }
 
 #icon_label {
+    font-family: Square;
+    src: url('./../../fonts/Square.TTF');
+    font-size: 200%;
+    color: white;
+    text-shadow: black 2.5px 2.5px;
+}
+
+#settings_label {
     font-family: Square;
     src: url('./../../fonts/Square.TTF');
     font-size: 200%;
