@@ -21,7 +21,7 @@
 <!--________________________________________________________________________________-->
 
             <div id="seperator"></div>
-            
+
 <!--________________________________________________________________________________-->
 
             <div id="generate_area">
@@ -30,7 +30,8 @@
                 <div id="date_area">
                     <div class="main_header" id="date_header"> Date Selection </div>
                     <br><br><br>
-                    <select class="drowpdown" id="dropdown_month">
+                    <select class="drowpdown" id="dropdown_month" v-model="selected_month">
+                      <option disabled selected>Month</option>
                       <option value="1">January</option>
                       <option value="2">Febuary</option>
                       <option value="3">March</option>
@@ -44,7 +45,8 @@
                       <option value="11">November</option>
                       <option value="12">December</option>
                     </select>
-                    <select class="drowpdown" id="dropdown_year">
+                    <select class="drowpdown" id="dropdown_year" v-model="selected_year">
+                      <option disabled selected>Year</option>
                       <option value="2020">2020</option>
                       <option value="2021">2021</option>
                       <option value="2022">2022</option>
@@ -55,7 +57,6 @@
                     <div class="main_header" id="actions_header"> Actions </div>
                     <br><br><br>
                     <button id="btn_generate" class="pixel_button" @click="goBack()">Generate</button>
-                    <!--<button id="btn_download" class="pixel_button" @click="goBack()" disabled >Download</button>-->
                     <button id="btn_gendown" class="pixel_button" @click="goBack()">Generate + Download</button>
                 </div>
             </div>
@@ -71,18 +72,21 @@
 
 export default {
   name: 'StockxPage',
+  emits: {
+      backToPageSelection:null
+  },
   props: {
       user_id: String,
-      user_settings: Array,
-      user_stockx_sales: Array,
+      user_settings: Object,
+      user_stockx_sales: Object,
   },
   created() {
-      console.log("Stockx Module received this data:")
-      //this.user_stockx_sales.forEach(element => console.log(element));
   },
   data() {
       return {
-          "selected_file": null
+          "selected_file": null,
+          "selected_month": "Month",
+          "selected_year": "Year",
       }
   },
   methods: {
@@ -137,7 +141,7 @@ h1 {
     touch-action: manipulation;
 }
 
-#pixel_button:active {
+.pixel_button:active {
     box-shadow: 0px 0px 0px 0px;
     top: 2px;
     left: 2px;
@@ -176,14 +180,29 @@ h1 {
 }
 
 #upload_image {
-    padding-top: 2.5%;
+    padding-top: 3.5%;
     margin-left: 20%;
     float:left;
     width: 12.5%;
+    -webkit-filter: drop-shadow(5px 5px 0 black) drop-shadow(-1px -1px 0 black);
+    filter: drop-shadow(4px 4px 0 black) drop-shadow(-1px -1px 0 black);
 }
 
 #upload_image:hover {
     cursor: pointer;
+}
+
+#upload_image:active {
+    -webkit-filter: drop-shadow(11px 11px 0 black) drop-shadow(-1px -1px 0 black);
+    filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black);
+    padding-top: 4%;
+    padding-left: 2px;
+}
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+     box-sizing: border-box;
 }
 
 #selected_filename {

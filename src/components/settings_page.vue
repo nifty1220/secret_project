@@ -9,10 +9,18 @@
         <input id="sevdesk_key" type="text" v-model="sevdesk_key"><br>
 
         <div id="seperator"></div>
-        <div id="alias_header" class="main_header"> Alias Login </div>
-        <input id="alias_email_input" type="text" v-model="alias_email" placeholder="E-Mail"><br>
-        <input id="alias_password_input" type="text" v-model="alias_password" placeholder="Password"><br>
 
+        <div id="alias_container">
+            <div id="alias_header" class="main_header"> Alias Login </div>
+            <input id="alias_email_input" type="text" v-model="alias_email" placeholder="E-Mail"><br>
+            <input id="alias_password_input" type="text" v-model="alias_password" placeholder="Password"><br>
+        </div>
+        <div id="stockx_container">
+            <img id="cookie_image" src="./../assets/cookie.png">
+            <div id="stockx_header" class="main_header"> StockX Cookie </div>
+            <textarea  id="stockx_cookie_input" type="textarea" v-model="stockx_cookies" placeholder="Paste Cookies here..."></textarea>
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <div id="seperator"></div>
 
         <div id="sort_options_header" class="main_header"> Sort Invoices by sale date </div>
@@ -30,17 +38,20 @@ import 'vue3-toastify/dist/index.css';
 
 export default {
   name: 'SettingsPage',
+  emits: {
+      backToPageSelection:null,
+      retrieveUserData:null,
+  },
   props: {
       user_id: String,
-      user_settings: Array
+      user_settings: Object
   },
   created() {
       this.sevdesk_key = this.user_settings["sevdesk_api_key"]
       this.alias_email = this.user_settings["alias_email"]
       this.alias_password = this.user_settings["alias_password"]
+      this.stockx_cookies = JSON.stringify(this.user_settings["stockx_cookie"])
       this.sort_by_sale_date = this.user_settings["sort_invoice_by_sale_date"]
-      console.log("Settings Module received this data:")
-      console.log(this.user_settings)
   },
   data() {
       return {
@@ -48,7 +59,8 @@ export default {
           sort_by_sale_date: false,
           checkbox_text: "",
           alias_email: "",
-          alias_password: ""
+          alias_password: "",
+          stockx_cookies: "TEST",
       }
   },
   watch: {
@@ -74,6 +86,7 @@ export default {
                       "alias_email": this.alias_email,
                       "alias_password": this.alias_password,
                       "sort_option": this.sort_by_sale_date,
+                      "stockx_cookies": this.stockx_cookies
                   },
                   headers: {
                       "Content-Type": "application/json",
@@ -180,7 +193,7 @@ h1 {
 
 #sevdesk_logo {
     float:left;
-    margin-left: 38.5%;
+    margin-left: 39%;
     margin-top: 2.5%;
     height: 50px;
     width: 80px;
@@ -213,14 +226,33 @@ h1 {
     touch-action: manipulation;
 }
 
+#alias_container {
+    float:left;
+    width: 25%;
+    height: 15em;
+    margin-left: 22.5%;
+    margin-top: 1.5%;
+}
+
+#stockx_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    float:left;
+    width: 25%;
+    height: 15em;
+    margin-left: 5%;
+    margin-top: 1.5%;
+}
+
 #alias_header {
     margin-top: 3%;
     margin-left: 1%;
 }
 
 #alias_email_input {
-    margin-top: 1%;
-    width: 15%;
+    margin-top: 3%;
+    width: 75%;
     font-family: Square;
     src: url('./../../fonts/Square.TTF');
     font-size: 125%;
@@ -238,8 +270,8 @@ h1 {
 }
 
 #alias_password_input {
-    margin-top: 1%;
-    width: 15%;
+    margin-top: 3%;
+    width: 75%;
     font-family: Square;
     src: url('./../../fonts/Square.TTF');
     font-size: 125%;
@@ -256,8 +288,45 @@ h1 {
     touch-action: manipulation;
 }
 
+#cookie_image {
+    height: 50px;
+    width: 50px;
+    margin-left: 15%;
+    -webkit-filter: drop-shadow(5px 5px 0 black) drop-shadow(-1px -1px 0 black);
+    filter: drop-shadow(2px 2px 0 black) drop-shadow(-1px -1px 0 black);
+}
+
+#stockx_header {
+    margin-top: 7.5px;
+    width: 240px;
+    height: 40px;
+    float: left;
+}
+
+#stockx_cookie_input {
+    resize: none;
+    margin-top: 1%;
+    height: 65%;
+    font-family: Square;
+    src: url('./../../fonts/Square.TTF');
+    font-size: 125%;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    cursor: pointer;
+    border: 3px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 0px 0px 0px 0px, 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    flex:100%;
+    order: 3;
+}
+
 #sort_options_header {
-    margin-top: 3%;
+    margin-top: 1.5%;
 }
 
 #sort_checkbox {
@@ -293,7 +362,7 @@ h1 {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    margin-top: 2.5%;
+    margin-top: 3%;
     position: relative;
 }
 
@@ -305,7 +374,7 @@ h1 {
 
 #seperator{
     margin: 0 auto;
-    margin-top: 3%;
+    margin-top: 2%;
     height: 1px;
     width: 50%;
     border-radius: 100px;

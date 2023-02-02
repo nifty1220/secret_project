@@ -20,6 +20,9 @@
 <script>
 export default {
   name: 'SiteSelectionPage',
+  emits: {
+      showSelectedPage:null
+  },
   data() {
       return {
       }
@@ -102,10 +105,9 @@ export default {
 }
 
 #settings_image {
-    border-radius: 30px;
-    box-shadow: rgba(51, 51, 51, 1) 0px 0px 40px;
-    border: 4px solid;
-    border-color: rgba(51, 51, 51);
+    //border-color: rgba(51, 51, 51);
+    -webkit-filter: drop-shadow(5px 5px 0 black) drop-shadow(-1px -1px 0 black);
+    filter: drop-shadow(2px 2px 0 white) drop-shadow(-1px -1px 0 white);
 }
 
 #icon_label {
