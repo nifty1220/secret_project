@@ -3,8 +3,9 @@ from flask_cors import CORS, cross_origin
 from datetime import date, datetime
 import psycopg2, requests, json, tls_client, os, csv, json, calendar, decimal
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='secret_project/dist', static_url_path='')
 cors = CORS(app)
+
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 app = Flask(__name__)
@@ -17,6 +18,11 @@ conn = psycopg2.connect(
         )
 
 ####################################################
+
+@app.route('/testing', methods=["GET"])
+@cross_origin()
+def test():
+    return jsonify({"data": "test"})
 
 @app.route('/login_user', methods=["GET"])
 @cross_origin()
@@ -584,5 +590,10 @@ def save_settings():
     "stockx_cookie": stockx_cookie,
     }
 
+@app.route('/')
+@cross_origin()
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
+
 if __name__ == '__main__':
-    app.run(host='10.0.0.9', port=5000,debug=True)
+    app.run(host='127.0.0.1', port=5000,debug=True)

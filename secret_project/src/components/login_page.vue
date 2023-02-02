@@ -33,7 +33,7 @@ export default {
 
             axios({
                     method: "GET",
-                    url: 'http://10.0.0.9:5000/login_user',
+                    url: 'http://127.0.0.1:5000/login_user',
                     data: {},
                     headers: {
                         "Content-Type": "application/json",
